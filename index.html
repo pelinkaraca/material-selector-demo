@@ -6,27 +6,32 @@
   <style>
     body {
       font-family: sans-serif;
-      padding: 20px;
-      font-size: 14px;
+      padding: 40px;
+      background-color: #f7f7f7;
+    }
+    h2 {
+      background-color: #f25c3e;
+      color: white;
+      padding: 10px;
+      margin-top: 40px;
     }
     label {
       font-weight: bold;
       display: block;
-      margin-bottom: 5px;
+      margin-top: 15px;
     }
     input, select {
-      width: 250px;
-      padding: 6px 10px;
-      margin-bottom: 10px;
-      border-radius: 6px;
+      width: 280px;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 8px;
       border: 1px solid #ccc;
       background-color: #FFE6CC;
-      font-size: 13px;
     }
     .row {
       display: flex;
+      gap: 40px;
       flex-wrap: wrap;
-      gap: 30px;
     }
     .form-group {
       display: flex;
@@ -36,20 +41,27 @@
 </head>
 <body>
 
+  <h2>Scenario 1:</h2>
   <div class="row">
     <div class="form-group">
-      <label for="material">Material used:</label>
-      <input type="text" id="material" placeholder="e.g., 100 - Pump" oninput="assignMaterialLabor()">
+      <label for="material1">Please select the material used:</label>
+      <select id="material1" onchange="assignMaterialLabor()">
+        <option value="">Select a material</option>
+        <option value="100 - Pump">100 - Pump</option>
+        <option value="200 - Electronic Cart">200 - Electronic Cart</option>
+        <option value="300 - Other Material">300 - Other Material</option>
+        <option value="400 - Other Material">400 - Other Material</option>
+      </select>
     </div>
 
     <div class="form-group">
-      <label for="materialLabor">Material-involved labour:</label>
-      <input type="text" id="materialLabor" readonly>
+      <label for="materialLabor1">Material-involved labour:</label>
+      <input type="text" id="materialLabor1" readonly>
     </div>
   </div>
 
-  <div class="form-group" style="margin-top: 10px;">
-    <label for="nonMaterialLabor">Non-material labor used:</label>
+  <div class="form-group">
+    <label for="nonMaterialLabor">Please enter non-material labor used:</label>
     <select id="nonMaterialLabor">
       <option value="">Select a labor</option>
       <option value="900 - Easy Activities">900 - Easy Activities</option>
@@ -58,6 +70,34 @@
       <option value="1200 - Door Changes">1200 - Door Changes</option>
       <option value="1300 - Food Adjustment">1300 - Food Adjustment</option>
     </select>
+  </div>
+
+  <h2>Scenario 2:</h2>
+  <div class="form-group">
+    <label for="material2">Please enter the material used:</label>
+    <input list="materialList" id="material2" placeholder="e.g., 100 - Pump">
+    <datalist id="materialList">
+      <option value="100 - Pump">
+      <option value="200 - Electronic Cart">
+      <option value="300 - Other Material">
+      <option value="400 - Other Material">
+    </datalist>
+  </div>
+
+  <div class="form-group">
+    <label for="labor2">Please enter the labor used:</label>
+    <input list="laborList" id="labor2" placeholder="e.g., 500 - Pump Activities">
+    <datalist id="laborList">
+      <option value="500 - Pump Activities">
+      <option value="600 - Electronic Activities">
+      <option value="700 - Other Services Class - 1">
+      <option value="800 - Other Services Class - 2">
+      <option value="900 - Easy Activities">
+      <option value="1000 - Medium Activities">
+      <option value="1100 - High Activities">
+      <option value="1200 - Door Changes">
+      <option value="1300 - Food Adjustment">
+    </datalist>
   </div>
 
   <script>
@@ -69,8 +109,8 @@
     };
 
     function assignMaterialLabor() {
-      const materialInput = document.getElementById("material").value.trim();
-      const materialLaborField = document.getElementById("materialLabor");
+      const materialInput = document.getElementById("material1").value.trim();
+      const materialLaborField = document.getElementById("materialLabor1");
 
       if (materialLaborMap[materialInput]) {
         materialLaborField.value = materialLaborMap[materialInput];
