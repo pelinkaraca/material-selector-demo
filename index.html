@@ -7,6 +7,7 @@
     body {
       font-family: sans-serif;
       padding: 40px;
+      margin: 0;
       background-color: #f7f7f7;
     }
 
@@ -44,8 +45,8 @@
       margin-bottom: 20px;
     }
 
-    .scenario-spacing {
-      margin-top: 120px;
+    .spacer {
+      height: 120px;
     }
   </style>
 </head>
@@ -83,8 +84,11 @@
     </select>
   </div>
 
+  <!-- BOŞLUK -->
+  <div class="spacer"></div>
+
   <!-- SCENARIO 2 -->
-  <h2 class="scenario-spacing">Scenario 2:</h2>
+  <h2>Scenario 2:</h2>
   <div class="form-group">
     <label for="material2">Please enter the material used:</label>
     <input list="materialList" id="material2" placeholder="e.g., 100 - Pump">
