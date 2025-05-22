@@ -44,6 +44,10 @@
       flex-direction: column;
       margin-bottom: 20px;
     }
+
+    .spacer {
+      height: 60px;
+    }
   </style>
 </head>
 <body>
@@ -57,8 +61,8 @@
       <datalist id="materialOptions">
         <option value="100 - Pump">
         <option value="200 - Electronic Cart">
-        <option value="300 - Other Material Type A">
-        <option value="400 - Other Material Type B">
+        <option value="300 - Other Material">
+        <option value="400 - Other Material">
       </datalist>
     </div>
 
@@ -81,26 +85,36 @@
   </div>
 
   <!-- SCENARIO 2 -->
-  <h2 style="margin-top: 120px !important;">Scenario 2:</h2>
-  <div class="form-group">
-    <label for="material2">Please enter the material used:</label>
-    <input list="materialList" id="material2" placeholder="e.g., 100 - Pump">
-    <datalist id="materialList">
-      <option value="100 - Pump">
-      <option value="200 - Electronic Cart">
-      <option value="300 - Other Material Type A">
-      <option value="400 - Other Material Type B">
-    </datalist>
+  <div class="spacer"></div>
+  <h2>Scenario 2:</h2>
+  <div class="row">
+    <div class="form-group">
+      <label for="labour2">Please enter the labor used:</label>
+      <input list="labourList" id="labour2" placeholder="e.g., 500 - Pump Activities">
+      <datalist id="labourList">
+        <option value="500 - Pump Activities">
+        <option value="600 - Electronic Activities">
+        <option value="700 - Other Services Class - 1">
+        <option value="800 - Other Services Class - 2">
+      </datalist>
+    </div>
+
+    <div class="form-group">
+      <label for="material2">Please enter the material used:</label>
+      <input list="materialList" id="material2" placeholder="e.g., 100 - Pump">
+      <datalist id="materialList">
+        <option value="100 - Pump">
+        <option value="200 - Electronic Cart">
+        <option value="300 - Other Material">
+        <option value="400 - Other Material">
+      </datalist>
+    </div>
   </div>
 
   <div class="form-group">
-    <label for="labor2">Please enter the labor used:</label>
-    <input list="laborList" id="labor2" placeholder="e.g., 500 - Pump Activities">
-    <datalist id="laborList">
-      <option value="500 - Pump Activities">
-      <option value="600 - Electronic Activities">
-      <option value="700 - Other Services Class - 1">
-      <option value="800 - Other Services Class - 2">
+    <label for="nonMaterial2">Please enter the non-material labor used:</label>
+    <input list="nonMaterialList" id="nonMaterial2" placeholder="e.g., 900 - Easy Activities">
+    <datalist id="nonMaterialList">
       <option value="900 - Easy Activities">
       <option value="1000 - Medium Activities">
       <option value="1100 - High Activities">
@@ -113,8 +127,8 @@
     const materialLaborMap = {
       "100 - Pump": "500 - Pump Activities",
       "200 - Electronic Cart": "600 - Electronic Activities",
-      "300 - Other Material Type A": "700 - Other Services Class - 1",
-      "400 - Other Material Type B": "800 - Other Services Class - 2"
+      "300 - Other Material": "700 - Other Services Class - 1",
+      "400 - Other Material": "800 - Other Services Class - 2"
     };
 
     function assignMaterialLabor() {
