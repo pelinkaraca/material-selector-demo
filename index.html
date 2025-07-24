@@ -2,76 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Scenario 1 & 2 Combined</title>
+  <title>Material / Labor Coding</title>
   <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 40px;
+      background-color: #f7f7f7;
+    }
 
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 40px;
-  background-color: #f7f7f7;
-}
+    h2 {
+      background-color: #f25c3e;
+      color: white;
+      padding: 12px 20px;
+      margin: 0 0 20px 0;
+      font-size: 24px;
+    }
 
-h2 {
-  background-color: #f25c3e;
-  color: white;
-  padding: 12px 20px;
-  margin: 0 0 20px 0; /* üstte boşluk yok, altta 20px */
-  font-size: 24px; /* isteğe bağlı sabitleme */
-}
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 15px 0 10px;
+    }
 
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: bold;
-  font-size: 18px;
-  margin: 15px 0 10px;
-}
+    input, select {
+      width: 260px;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #FFE6CC;
+    }
 
-input, select {
-  width: 260px;
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: #FFE6CC;
-}
+    .row {
+      display: flex;
+      gap: 20px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
 
-.row {
-  display: flex;
-  gap: 20px;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  margin-bottom: 15px;
-}
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
+    .icon-button {
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      background-color: #f25c3e;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
 
-.icon-button {
-  font-size: 20px;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  background-color: #f25c3e;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.icon-button.remove {
-  background-color: #999;
-}
+    .icon-button.remove {
+      background-color: #999;
+    }
   </style>
 </head>
 <body>
 
-  <!-- SCENARIO 1 -->
-  <h2>Scenario 1</h2>
+  <h2>Material / Labor Coding</h2>
 
   <div class="section-header">
     <span>Material</span>
@@ -85,50 +83,36 @@ input, select {
   </div>
   <div id="scenario1NonMaterialContainer"></div>
 
-  <!-- SCENARIO 2 -->
-  <h2>Scenario 2</h2>
-
-  <div class="section-header">
-    <span>Material</span>
-    <button class="icon-button" onclick="addScenario2MaterialRow()">+</button>
-  </div>
-  <div id="scenario2MaterialContainer"></div>
-
-  <div class="section-header">
-    <span>Non-Material Labour</span>
-    <button class="icon-button" onclick="addScenario2NonMaterialRow()">+</button>
-  </div>
-  <div id="scenario2NonMaterialContainer"></div>
-
   <script>
     const materialLaborMap = {
-      "00018014 Gövde-ön": "00018014 Gövde-ön",
-      "00011923 Onarım seti": "00011923 Onarım seti",
-      "00014003 Amortisör": "00014003 Amortisör",
-      "00002381 Conta-Körüklü kapı": "00002381 Conta-Körüklü kapı",
-      "00016305 Rezistans gövdesi": "00016305 Rezistans gövdesi",
-      "00001186 Pompa motoru": "00001186 Pompa motoru",
-      "00001153 Yıkama kazanı": "00001153 Yıkama kazanı",
-      "x": "Low Level Services",
-      "y": "Low Level Services",
-      "z": "Low Level Services",
-      "w": "Low Level Services",
-      "a": "Low Level Services",
-      "b": "Medium Level Services",
-      "c": "Medium Level Services",
-      "d": "High Level Services",
-      "e": "High Level Services"
+      "1153 Washing Drum": "1153 Washing Drum",
+      "14003 Shock Absorber": "14003 Shock Absorber",
+      "11923 Repair Kit": "11923 Repair Kit",
+      "18014 Front Body": "18014 Front Body",
+      "16305 Heater Housing": "16305 Heater Housing",
+      "1078 Body": "1078 Body",
+      "1186 Pump Motor": "1186 Pump Motor",
+      "14070 Power module–Programmed": "14070 Power module–Programmed",
+      "2381 Gasket–Bellows Door":"2381 Gasket–Bellows Door",
+      "1001 Closing Part": "Easy Level Services",
+      "2218 Switch Component": "Easy Level Services",
+      "1025 Panel": "Easy Level Services",
+      "15034 Door Handle": "Medium Level Services",
+      "18084 Drawer": "Medium Level Services",
+      "18118 Control Board": "High Level Services",
+      "14040 Door Hinge": "High Level Services"
     };
 
     const nonMaterialMap = {
-      "994329 - 118-YIKAYICI BLOK PARÇALARININ DEĞİŞİMİ": ["118-YIKAYICI BLOK PARÇALARININ DEĞİŞİMİ"],
-      "994338 - 136-POMPA TEMİZLEME/150-POMPA SIKIŞIKLIK GİDERME": ["136-POMPA TEMİZLEME/150-POMPA SIKIŞIKLIK GİDERME"],
-      "100 - Easy": ["Filtre temizleme", "Ayak Ayarı"],
-      "101 - Medium": ["x", "y"],
-      "102 - High": ["z", "T"]
+      "994329 - Replacement of Washer Block Componenets": ["Replacement of Washer Block Componenets"],
+      "994338 - Pump Cleaning": ["Pump Cleaning"],
+      "994347 - Removal of Pump Blockage":["Removal of Pump Blockage"],
+      "99357 - Removal of Foreign Object Between Drum and Tub": ["Removal of Foreign Object Between Drum and Tub"],
+      "Easy Services": ["994452 - Installing A-Cool Door Panel"],
+      "Medium Services": ["994446 - 906-Unsuitable Env. Conditions (Cold/Hot)"],
+      "High Services": ["994439 - Fixing Cable Faults"]
     };
 
-    // Scenario 1 - Material
     function addScenario1MaterialRow() {
       const container = document.getElementById("scenario1MaterialContainer");
       const row = document.createElement("div");
@@ -162,7 +146,6 @@ input, select {
       container.appendChild(row);
     }
 
-    // Scenario 1 - Non-Material Labour
     function addScenario1NonMaterialRow() {
       const container = document.getElementById("scenario1NonMaterialContainer");
       const row = document.createElement("div");
@@ -211,60 +194,7 @@ input, select {
 
       container.appendChild(row);
     }
-
-    // Scenario 2 - Material
-    function addScenario2MaterialRow() {
-      const container = document.getElementById("scenario2MaterialContainer");
-      const row = document.createElement("div");
-      row.className = "row";
-
-      const mat = document.createElement("div");
-      mat.className = "form-group";
-      mat.innerHTML = `<label>Material</label><input placeholder="Enter material">`;
-      row.appendChild(mat);
-
-      const lab = document.createElement("div");
-      lab.className = "form-group";
-      lab.innerHTML = `<label>Material Labour</label><input placeholder="Enter labour">`;
-      row.appendChild(lab);
-
-      const removeBtn = document.createElement("button");
-      removeBtn.className = "icon-button remove";
-      removeBtn.innerText = "–";
-      removeBtn.onclick = () => container.removeChild(row);
-      row.appendChild(removeBtn);
-
-      container.appendChild(row);
-    }
-
-    // Scenario 2 - Non-Material
-    function addScenario2NonMaterialRow() {
-      const container = document.getElementById("scenario2NonMaterialContainer");
-      const row = document.createElement("div");
-      row.className = "row";
-
-      const group = document.createElement("div");
-      group.className = "form-group";
-      const select = document.createElement("select");
-      select.innerHTML = `<option value="">Select group</option>` +
-        Object.keys(nonMaterialMap).map(g => `<option value="${g}">${g}</option>`).join('');
-      group.innerHTML = `<label>Non-Material Labour Group</label>`;
-      group.appendChild(select);
-      row.appendChild(group);
-
-      const input = document.createElement("div");
-      input.className = "form-group";
-      input.innerHTML = `<label>Non-Material Labour</label><input placeholder="Enter Labour">`;
-      row.appendChild(input);
-
-      const removeBtn = document.createElement("button");
-      removeBtn.className = "icon-button remove";
-      removeBtn.innerText = "–";
-      removeBtn.onclick = () => container.removeChild(row);
-      row.appendChild(removeBtn);
-
-      container.appendChild(row);
-    }
   </script>
 </body>
 </html>
+
