@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Material / Labor Coding</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 40px;
+      background-color: #f7f7f7;
+    }
+
+    h2 {
+      background-color: #f25c3e;
+      color: white;
+      padding: 12px 20px;
+      margin: 0 0 20px 0;
+      font-size: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 15px 0 10px;
+    }
+
+    input, select {
+      width: 260px;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #FFE6CC;
+    }
+
+    input::placeholder {
+      color: #888;
+    }
+
+    select:invalid {
+      color: #888;
+    }
+
+    select option {
+      color: #000;
+    }
+
+    select option[disabled] {
+      color: #888;
+    }
+
+    select option[hidden] {
+      display: none;
+    }
+
+    .row {
+      display: flex;
+      gap: 20px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .icon-button {
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      background-color: #f25c3e;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .icon-button.remove {
+      background-color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Material / Labor Coding</h2>
+
+  <div class="section-header">
+    <span>Material</span>
+    <button class="icon-button" onclick="addScenario1MaterialRow()">+</button>
+  </div>
+  <div id="scenario1MaterialContainer"></div>
+
+  <div class="section-header">
+    <span>Non-Material Labour</span>
+    <button class="icon-button" onclick="addScenario1NonMaterialRow()">+</button>
+  </div>
+  <div id="scenario1NonMaterialContainer"></div>
+
+  <script>
+    const materialLaborMap = {
+      "Washing Drum": "Washing Drum",
+      "Shock Absorber": "Shock Absorber",
+      "Repair Kit": "Repair Kit",
+      "Front Body": "Front Body",
+      "Heater Housing": "Heater Housing",
+      "Body": "Body",
+      "Pump Motor": "Pump Motor",
+      "Power module–Programmed": "Power module–Programmed",
+      "Gasket–Bellows Door": "Gasket–Bellows Door",
+      "Closing Part": "Easy Level Services",
+      "Switch Component": "Easy Level Services",
+      "Panel": "Easy Level Services",
+      "Door Handle": "Medium Level Services",
+      "Drawer": "Medium Level Services",
+      "Control Board": "High Level Services",
+      "Door Hinge": "High Level Services"
+    };
+
+    const nonMaterialMap = {
+      "Replacement of Washer Block Componenets": ["Replacement of Washer Block Componenets"],
+      "Pump Cleaning": ["Pump Cleaning"],
+      "Removal of Pump Blockage": ["Removal of Pump Blockage"],
+      "Removal of Foreign Object Between Drum and Tub": ["Removal of Foreign Object Between Drum and Tub"],
+      "Easy Level Services": ["Installing A-Cool Door Panel", "Cleaning the Motor Commutator"],
+      "Medium Level Services": ["906-Unsuitable Env. Conditions (Cold/Hot)", "Foot Leveling"],
+      "High Level Services": ["Fixing Cable Faults"]
+    };
+
+    function addScenario1MaterialRow() {
+      const container = document.getElementById("scenario1MaterialContainer");
+      const row = document.createElement("div");
+      row.className = "row";
+
+      const matGroup = document.createElement("div");
+      matGroup.className = "form-group";
+      matGroup.innerHTML = `<label>Spare Part</label>
+        <input list="materialOptions" placeholder="Please select a spare part">
+        <datalist id="materialOptions">
+          ${Object.keys(materialLaborMap).map(key => `<option value="${key}">`).join("")}
+        </datalist>`;
+      row.appendChild(matGroup);
+
+      const labGroup = document.createElement("div");
+      labGroup.className = "form-group";
+      labGroup.innerHTML = `<label>Material Labor</label><input readonly>`;
+      row.appendChild(labGroup);
+
+      matGroup.querySelector("input").oninput = (e) => {
+        const val = e.target.value;
+        labGroup.querySelector("input").value = materialLaborMap[val] || "";
+      };
+
+      const removeBtn = document.createElement("button");
+      removeBtn.className = "icon-button remove";
+      removeBtn.innerText = "–";
+      removeBtn.onclick = () => container.removeChild(row);
+      row.appendChild(removeBtn);
+
+      container.appendChild(row);
+    }
+
+    function addScenario1NonMaterialRow() {
+      const container = document.getElementById("scenario1NonMaterialContainer");
+      const row = document.createElement("div");
+      row.className = "row";
+
+      const groupBox = document.createElement("div");
+      groupBox.className = "form-group";
+      groupBox.innerHTML = `<label>Non-Material Labor</label>`;
+      const groupSelect = document.createElement("select");
+      groupSelect.required = true;
+
+      const placeholderOption = document.createElement("option");
+      placeholderOption.text = "Please choose a labor";
+      placeholderOption.disabled = true;
+      placeholderOption.selected = true;
+      placeholderOption.value = "";
+      placeholderOption.hidden = true; // görünmesin
+      groupSelect.appendChild(placeholderOption);
+
+      Object.keys(nonMaterialMap).forEach(g => {
+        const option = document.createElement("option");
+        option.value = g;
+        option.text = g;
+        groupSelect.appendChild(option);
+      });
+
+      groupBox.appendChild(groupSelect);
+      row.appendChild(groupBox);
+
+      const resultBox = document.createElement("div");
+      resultBox.className = "form-group";
+      resultBox.innerHTML = `<label>Non-Material Labor Description</label><input readonly>`;
+      row.appendChild(resultBox);
+
+      groupSelect.addEventListener("change", () => {
+        const selected = groupSelect.value;
+        const matches = nonMaterialMap[selected] || [];
+        resultBox.innerHTML = `<label>Non-Material Labor Description</label>`;
+        if (matches.length === 1) {
+          const input = document.createElement("input");
+          input.value = matches[0];
+          input.readOnly = true;
+          resultBox.appendChild(input);
+        } else if (matches.length > 1) {
+          const select = document.createElement("select");
+          select.required = true;
+
+          const placeholderOption = document.createElement("option");
+          placeholderOption.text = "Please choose a labor description";
+          placeholderOption.disabled = true;
+          placeholderOption.selected = true;
+          placeholderOption.value = "";
+          placeholderOption.hidden = true;
+          select.appendChild(placeholderOption);
+
+          matches.forEach(m => {
+            const option = document.createElement("option");
+            option.value = m;
+            option.text = m;
+            select.appendChild(option);
+          });
+
+          resultBox.appendChild(select);
+        } else {
+          const empty = document.createElement("input");
+          empty.readOnly = true;
+          resultBox.appendChild(empty);
+        }
+      });
+
+      const removeBtn = document.createElement("button");
+      removeBtn.className = "icon-button remove";
+      removeBtn.innerText = "–";
+      removeBtn.onclick = () => container.removeChild(row);
+      row.appendChild(removeBtn);
+
+      container.appendChild(row);
+    }
+  </script>
+</body>
+</html>
